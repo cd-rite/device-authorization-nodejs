@@ -2,8 +2,8 @@ import got from 'got'
 import open from 'open'
 import prompt from 'prompt-sync'
 
-const oidcBase = 'http://localhost:8080/realms/stigman'
-const apiBase = 'http://localhost:64001/api'
+const oidcBase = 'https://localhost/kc/realms/stigman'
+const apiBase = 'https://localhost/stigman/api'
 const client_id = 'stig-manager'
 const scope = 'openid stig-manager:collection'
 
@@ -22,7 +22,7 @@ async function run () {
     // promptSync('Press any key to open browser')
     open(process.argv[2] === 'complete' ? response.verification_uri_complete : response.verification_uri)
 
-    let fetchToken = () => getToken(response.device_code)
+    let fetchToken = () => getToken(oidcMeta.token_endpoint, response.device_code)
     let validate = result => !!result.access_token
     let tokens = await poll(fetchToken, validate, response.interval * 1000)
     console.log(`Got access token from Keycloak`)
@@ -51,12 +51,11 @@ async function poll (fn, fnCondition, ms) {
   return result
 }
 
-async function getToken(device_code) {
+async function getToken(url, device_code) {
   try {
     console.log('Requesting token')
-    const response = await got.post('http://localhost:8080/realms/stigman/protocol/openid-connect/token', {
-    // const response = await got.post('https://login.microsoftonline.com/863af28d-88be-4b4d-a58a-d5c40ee1fa22/oauth2/v2.0/token', {
-        form: {
+    const response = await got.post(url, {
+      form: {
         grant_type: 'urn:ietf:params:oauth:grant-type:device_code',
         client_id: 'stig-manager',
         device_code
@@ -71,9 +70,9 @@ async function getToken(device_code) {
 
 async function getDeviceCode (url, client_id, scope) {
   return await got.post(url, {
-      form: {
-        client_id,
-        scope
+    form: {
+      client_id,
+      scope
     }
   }).json()
 }
