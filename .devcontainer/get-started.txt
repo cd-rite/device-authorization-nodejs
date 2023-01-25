@@ -1,0 +1,27 @@
+(make sure envs are set)
+Run docker containers:
+docker run --name stig-manager-auth -d -p 8080:8080 -p 8443:8443 -e KC_PROXY=edge -e KC_HOSTNAME_URL=${containerEnv:KEYCLOAK_HOSTNAME_URL} -e KC_HOSTNAME_ADMIN_URL=${containerEnv:KEYCLOAK_HOSTNAME_URL} nuwcdivnpt/stig-manager-auth
+
+docker run --name stig-manager-db -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=rootpw -e MYSQL_DATABASE=stigman -e MYSQL_USER=stigman -e MYSQL_PASSWORD=stigman  mysql:8 --innodb-buffer-pool-size=512M --sort_buffer_size=100M
+
+docker run -d --name stig-manager-api -p 64001:64001  nuwcdivnpt/stig-manager
+
+
+Set port 8080 to "public"
+
+Run app from vscode:
+cd to /api/source
+run "npm ci"
+Click "Launch" from nodejs "run & debug" interface
+
+check debug for successful start
+From "ports" tab, click link for port 64001 to open app in browser
+
+set port 64001 to "public" (optional)
+
+
+restart containers after codespace stops:
+docker container ls -a
+docker container start xxxxx
+
+

@@ -1,0 +1,21 @@
+{"image":"mcr.microsoft.com/devcontainers/universal:2",
+
+
+"containerEnv": {
+    "STIGMAN_CLIENT_OIDC_PROVIDER": "https://${localEnv:CODESPACE_NAME}-8080.${localEnv:GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}/realms/stigman/",
+    "KEYCLOAK_HOSTNAME_URL": "https://${localEnv:CODESPACE_NAME}-8080.${localEnv:GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}/",
+    "STIGMAN_OIDC_PROVIDER": "http://localhost:8080/realms/stigman",
+    "STIGMAN_API_PORT": "64001",
+    "STIGMAN_DB_TYPE": "mysql",
+    "STIGMAN_DB_HOST": "localhost",
+    "STIGMAN_DB_PORT": "3306",
+    "STIGMAN_DB_USER": "stigman",
+    "STIGMAN_DB_PASSWORD": "stigman",
+    "STIGMAN_DB_SCHEMA": "stigman",
+    "STIGMAN_DEV_RESPONSE_VALIDATION": "logOnly",
+
+
+    "MY_CONTAINER_VAR2": "${localEnv:GITHUB_REPOSITORY}"
+}
+
+}
