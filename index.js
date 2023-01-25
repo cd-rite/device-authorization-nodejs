@@ -2,8 +2,8 @@ import got from 'got'
 import open from 'open'
 import prompt from 'prompt-sync'
 
-const oidcBase = 'https://localhost/kc/realms/stigman'
-const apiBase = 'https://localhost/stigman/api'
+const oidcBase = 'https://cd-rite-ideal-waffle-7564w9x7x6wcw4r4-8080.preview.app.github.dev/realms/stigman'
+const apiBase = 'http://localhost:54000/api'
 const client_id = 'stig-manager'
 const scope = 'openid stig-manager:collection'
 
