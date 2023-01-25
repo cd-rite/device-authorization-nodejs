@@ -2,10 +2,9 @@
 Run docker containers:
 docker run --name stig-manager-auth -d -p 8080:8080 -p 8443:8443 -e KC_PROXY=edge -e KC_HOSTNAME_URL=${containerEnv:KEYCLOAK_HOSTNAME_URL} -e KC_HOSTNAME_ADMIN_URL=${containerEnv:KEYCLOAK_HOSTNAME_URL} nuwcdivnpt/stig-manager-auth
 
-docker run --name stig-manager-db -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=rootpw -e MYSQL_DATABASE=stigman -e MYSQL_USER=stigman -e MYSQL_PASSWORD=stigman  mysql:8 --innodb-buffer-pool-size=512M --sort_buffer_size=100M
+docker run --network=host --name stig-manager-db -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=rootpw -e MYSQL_DATABASE=stigman -e MYSQL_USER=stigman -e MYSQL_PASSWORD=stigman  mysql:8 --innodb-buffer-pool-size=512M --sort_buffer_size=100M
 
-docker run -d --name stig-manager-api -p 64001:64001  nuwcdivnpt/stig-manager
-
+docker run -d --network=host --name stig-manager-api -p 64001:54000 -e STIGMAN_DB_HOST=localhost -e STIGMAN_DB_PORT=3306 -e STIGMAN_DB_PASSWORD=$STIGMAN_DB_PASSWORD -e STIGMAN_OIDC_PROVIDER=https://$CODESPACE_NAME-8080.$GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN/realms/stigman -e STIGMAN_CLIENT_OIDC_PROVIDER=$STIGMAN_CLIENT_OIDC_PROVIDER nuwcdivnpt/stig-manager
 
 Set port 8080 to "public"
 
