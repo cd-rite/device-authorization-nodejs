@@ -2,9 +2,13 @@ import got from 'got'
 import open from 'open'
 import prompt from 'prompt-sync'
 
-const oidcBase = 'https://cd-rite-ideal-waffle-7564w9x7x6wcw4r4-8080.preview.app.github.dev/realms/stigman'
-const apiBase = 'http://localhost:54000/api'
-const client_id = 'stig-manager'
+// const config = import('./config')
+import {config} from "./config.js"
+// logger.writeInfo('index','configuration', config)
+
+const oidcBase = config.client.authority
+const apiBase = config.client.apiBase
+const client_id = config.client.clientId
 const scope = 'openid stig-manager:collection'
 
 run()
@@ -20,7 +24,8 @@ async function run () {
     
     console.log(response)
     // promptSync('Press any key to open browser')
-    open(process.argv[2] === 'complete' ? response.verification_uri_complete : response.verification_uri)
+    // open(process.argv[2] === 'complete' ? response.verification_uri_complete : response.verification_uri)
+    open(process.argv[2] === 'complete' ? response.verification_uri_complete : response.verification_uri_complete)
 
     let fetchToken = () => getToken(oidcMeta.token_endpoint, response.device_code)
     let validate = result => !!result.access_token
@@ -30,6 +35,7 @@ async function run () {
     console.log(`Requesting STIG Manager Collections`)
     const collections = await getCollections(tokens.access_token)
     console.log(collections)
+    console.log(JSON.stringify(collections))
   }
   catch (e) {
     console.log(e)
