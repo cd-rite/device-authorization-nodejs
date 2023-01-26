@@ -20,6 +20,8 @@ ctrl+click "verification_uri_complete" link to authenticate client
 
 If running from command line, link *should* open automatically.
 
+If it doesn't work first try, try "rebuild codespace".... It didn't generate the envvars properly the first time. 
+
 
 
 restart containers after codespace stops/starts:
