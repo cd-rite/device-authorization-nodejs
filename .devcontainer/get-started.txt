@@ -6,6 +6,10 @@ docker run --network=host --name stig-manager-db -d -p 3306:3306 -e MYSQL_ROOT_P
 
 docker run -d --network=host --name stig-manager-api -p 64001:54000 -e STIGMAN_DB_HOST=localhost -e STIGMAN_DB_PORT=3306 -e STIGMAN_DB_PASSWORD=$STIGMAN_DB_PASSWORD -e STIGMAN_OIDC_PROVIDER=https://$CODESPACE_NAME-8080.$GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN/realms/stigman -e STIGMAN_CLIENT_OIDC_PROVIDER=$STIGMAN_CLIENT_OIDC_PROVIDER nuwcdivnpt/stig-manager
 
+***Docker with swagger docs:***
+docker run -d --network=host --name stig-manager-api -p 64001:54000 -e STIGMAN_DB_HOST=localhost -e STIGMAN_DB_PORT=3306 -e STIGMAN_DB_PASSWORD=$STIGMAN_DB_PASSWORD -e STIGMAN_OIDC_PROVIDER=https://$CODESPACE_NAME-8080.$GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN/realms/stigman -e STIGMAN_CLIENT_OIDC_PROVIDER=$STIGMAN_CLIENT_OIDC_PROVIDER -e STIGMAN_SWAGGER_ENABLED=true -e STIGMAN_SWAGGER_OIDC_PROVIDER=$STIGMAN_CLIENT_OIDC_PROVIDER -e STIGMAN_SWAGGER_SERVER=https://$CODESPACE_NAME-54000.$GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN/api nuwcdivnpt/stig-manager
+
+
 Wait a minute or so
 Set port 8080 and 54000 to "public"
 From "ports" tab, click link for port 54000 to open app in browser to verify functionality 
