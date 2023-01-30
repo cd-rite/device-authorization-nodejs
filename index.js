@@ -9,7 +9,7 @@ import {config} from "./config.js"
 const oidcBase = config.client.authority
 const apiBase = config.client.apiBase
 const client_id = config.client.clientId
-const scope = 'openid stig-manager:collection'
+const scope = 'openid stig-manager:collection stig-manager:user stig-manager:stig stig-manager:op'
 
 run()
 
